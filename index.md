@@ -1,7 +1,3 @@
----
-title: Visse's Portfolio
----
-
 Portfolio
 ==========
 
