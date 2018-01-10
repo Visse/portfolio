@@ -1,6 +1,3 @@
-Portfolio
-==========
-
 #### 1. DV1542 Demo
 This was a project for a course in 3D programming. It is a 3d rendering engine with the purpose to learn about different techniques used in games and other 3d applications. I choose to implement the following techniques in a space setting. Its implemented as 3 different rooms connected by corridors. Each room is designed to demonstrate a set of techniques.
 
