@@ -1,6 +1,6 @@
 # DV1542
 
-<a src="../dv1542_preview.png"><img src="../dv1542_preview.png" width="800"/></a>
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/../dv1542_preview.png"><img src="../dv1542_preview.png" width="800"/></a>
 
 This is a implementation of a 3D renderer engine, done as part of a project in a course in 3d programming. It implements a wide range of techniques from lights & shadows to utilizing the GPU for general computation with compute shaders. Some of the implemented techniques are:
 
@@ -27,39 +27,46 @@ The scene is split into 3 rooms that are connected by corridors. Each room is de
 This room contains a pedestal in the middle, that has a point light sitting on top. Moving around the pedestal is a number of spheres, those shadows is cast on the walls of the room.
 
 A view on the room with a pedestal in the middle.
-<a src="shadow_room.png"><img src="shadow_room.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/shadow_room.png"><img src="shadow_room.png" width="800"/></a>
 
 Closer look on the shadows
-<a src="shadows2.png"><img src="shadows2.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/shadows2.png"><img src="shadows2.png" width="800"/></a>
 
 
 The textures used in the g-buffer used in deferred rendering. From top-left to bottom-right:
 Normals, diffuse (colour), depth and the shaded end product.
-<a src="defered.png"><img src="defered.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/defered.png"><img src="defered.png" width="800"/></a>
 
 ## Room 2 - Particles
 This room contains a *cage* with a particle system inside of it. The particles are driven by two simple rules. The first one is a limited lifetime (by default 10 seconds), the second is that they are attracted to some moving attractor points. The strength of this attraction is a function based on their distance to said point. This whole simulation is driven by the GPU with compute shaders. By using the GPU I can simulate a couple of millions of particles. I've tried simulated up to around 5million particles and the simulation was running smooth, however I stopped there since the rendering become to expensive.
 
-<a src="particle_room.png"><img src="particle_room.png" width="800"/></a>
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/particle_room.png"><img src="particle_room.png" width="800"/></a>
 
 This is about 2 million particles outside of the room to better show each individual particle. The left most image is rendered with low intensity, the right with the highest and then middle have a intensity in between. Each particle is only a single pixel in size, but together they can create some amazing patterns and it can be very hypnotic seeing them move and change pattern.
-<a src="particles.png"><img src="particles.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/particles.png"><img src="particles.png" width="800"/></a>
 
 ## Room 3 - Water
 The last room contains a pool with a wave simulation inside. This room is probably the one I had the most fun implementing and I learnt allot about what it is that make water look like water. There are two parts of rendering water, the first part is specular reflections - this is what makes water look shiny. The second part, and in my opinion the important one, is refraction - then light passes thru water it bends making whatever it is behind the water look distorted.
 The only way I know of that can mimic that effect is with ray tracing. However since GPU's are optimized for the opposite, they work by projecting the meshes to the screen, instead of tracing rays from the screen into the scene. So I came up with a alternative way, by rendering the water as a post effect. By combining the water normal and depth of the scene I distort the shaded scene to fake a refraction effect.
 I also used a tessellation shader to dynamically tessellate the water surface. This makes the water appear smooth up close, without using too many small triangles when you are far away.
 
-<a src="water_room.png"><img src="water_room.png" width="800"/></a>
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/water_room.png"><img src="water_room.png" width="800"/></a>
 
 Different levels of refraction, the left most image has no refraction, the other two have different levels of refraction.
-<a src="refraction.png"><img src="refraction.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/refraction.png"><img src="refraction.png" width="800"/></a>
 
 The left column shows the surface, the right one its wireframe. The upper row is with low tessellation, the lower one with a high.
-<a src="tess.png"><img src="tess.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/tess.png"><img src="tess.png" width="800"/></a>
 
 The station from the outside. The background is a skybox of stars.
-<a src="space.png"><img src="space.png" width="800"/></a>
+
+<a src="//raw.githubusercontent.com/Visse/portfolio/master/dv1542/space.png"><img src="space.png" width="800"/></a>
 
 
 ### Code can be found [here](//github.com/Visse/dv1542_project) and other projects [here](../index.md)
