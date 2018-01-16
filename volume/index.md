@@ -1,8 +1,6 @@
 Volume - **WIP**
 ==========
-<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 [![](../volume_preview.png)](../volume_preview.png)
 
@@ -45,8 +43,9 @@ Resources:
 
 
 ------------------------------
-Other algorithms I would like to try implementing
-==============================
+
+# Other algorithms I would like to try implementing
+
 
 ## 5. Dual Marching Cubes
 
