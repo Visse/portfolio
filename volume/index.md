@@ -1,5 +1,8 @@
 Volume - **WIP**
 ==========
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 [![](../volume_preview.png)](../volume_preview.png)
 
@@ -63,5 +66,7 @@ I don't know much of this method, other than that many of the other algorithms r
 ## Terms
 
 **Iso Surface** An iso surface is defined by the function $$f(p) = 0$$. For example the function $$f(x,y,z) = x^2 + y^2 + z^2- r^2$$ represents a sphere with the radius $$r$$.
+
 **Uniform Grid** This is a grid there each *cell* is the same size.
+
 **Octree** This a spatial tree data structure there each cell has 8 children.

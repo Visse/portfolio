@@ -14,7 +14,11 @@ This was a project for a course in 3D programming. It is a 3d rendering engine w
 -------------------------------------------
 
 #### 2. Volume
-This is part of another project but is worth showing of by its self. Its a project to implementing different algorithms for generating [implicit surfaces](https://en.wikipedia.org/wiki/Implicit_surface). Currently I have implemented the following algorithms:
+This is part of another project but is worth showing of by its self. Its a project to implementing different algorithms for generating [implicit surfaces](https://en.wikipedia.org/wiki/Implicit_surface).
+
+[![](volume_preview.png)](volume_preview.png)
+
+Currently I have implemented the following algorithms:
 * **Marching Cubes** _(W. E. Lorensen and H. E. Cline)_
 * **Dual Contouring Marching Cubes** _(by Scott Schaefer and Joe Warren)_
 * **Dual Contouring** _(by Tao Ju, Frank Lossaso, Scott Schaefer and Joe Warren)_
