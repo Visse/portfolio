@@ -12,3 +12,21 @@ This was a project for a course in 3D programming. It is a 3d rendering engine w
 ### [More info + images](dv1542/index.md)
 
 -------------------------------------------
+
+#### 2. Volume
+This is part of another project but is worth showing of by its self. Its a project to implementing different algorithms for generating [implicit surfaces](https://en.wikipedia.org/wiki/Implicit_surface). Currently I have implemented the following algorithms:
+* **Marching Cubes** _(W. E. Lorensen and H. E. Cline)_
+* **Dual Contouring Marching Cubes** _(by Scott Schaefer and Joe Warren)_
+* **Dual Contouring** _(by Tao Ju, Frank Lossaso, Scott Schaefer and Joe Warren)_
+* **Adoptive Dual Contouring** _(using the adoptive nature of DCMC with Dual Contouring)_
+
+In the future I would also like to implement the following algorithms:
+* **Surface Nets** _(by Sarah F. F. Gibson)_
+* **Dual Marching Cubes** _(by Gregory M. Nielson)_
+* **Manifold Dual Contouring** _(by Scott Schaefer, Tao Ju and Joe Warren)_
+
+### [More information & images of the different algorithms](volume/index.md)
+
+#### 3. Meta-ball raytracer in JavaScript+WebGL
+
+-------------------------------------------
