@@ -4,6 +4,23 @@ Volume - **WIP**
 
 [![](../volume_preview.png)](../volume_preview.png)
 
+## Table of content
+1. [Introduction](#Introduction)
+2. [Implemented Algorithms](#Implemented-Algorithms)
+  * [Marching Cubes](#Marching-Cubes)
+  * [Dual Contouring](#Dual-Contouring)
+  * [Dual Contouring Marching Cubes](#Dual-Contouring-Marching-Cubes)
+  * [Adoptive Dual Contouring](#Adoptive-Dual-Contouring)
+3. [Other Algorithms](#Other-Algorithms)
+  * [Dual Marching Cubes](#Dual-Marching-Cubes)
+  * [Manifold Dual Contouring](#Manifold-Dual-Contouring)
+  * [Surface Nets](#Surface-Nets)
+4. [Supported primitives](#Supported-Primitives)
+5. [Terms](#Terms)
+
+
+# Introduction
+
 This is part of a bigger project but I think its worth showing by its self. Its a collection of different algorithms for constructing [implicit surfaces](https://en.wikipedia.org/wiki/Implicit_surface).
 First a short introduction to each algorithm.
 
@@ -19,46 +36,50 @@ First a short introduction to each algorithm.
 
 **Manifold Dual Contouring (MDC)** extends *DMC* to generate adoptive surface. This adoptive surface have several nice properties such as being manifold. The method proposed in the paper can also simplify surfaces close together without loosing the surface topology (connecting the surfaces together).
 
-
-## 1. Marching Cubes
+# Implemented Algorithms
+## * Marching Cubes
 
 
 Resources:
 * [Marching Cubes: A high resolution 3D surface construction algorithm](http://fab.cba.mit.edu/classes/S62.12/docs/Lorensen_marching_cubes.pdf)
 * [Efficient implementation of marching cubes' cases with topological guarantees](http://www.academia.edu/download/3588786/10.1.1.58.4218.pdf)
 
-## 2. Dual Contouring
+## * Dual Contouring
 
 Resources:
 * [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
 * [Dual contouring: The secret sauce](http://hyperfun.org/FHF_Log/Schaefer_DualSecret_TR02408.pdf)
 * [Surface simplification using quadric error metrics](https://cg.informatik.uni-freiburg.de/intern/seminar/meshSimplification_1997_Garland.pdf)
 
-## 3. Dual Contouring Marching Cubes
+## * Dual Contouring Marching Cubes
 
 Resources:
 * [Dual marching cubes: Primal contouring of dual grids](Dual marching cubes: Primal contouring of dual grids)
 
-## 4. Adoptive Dual Contouring
+## * Adoptive Dual Contouring
 
 
 ------------------------------
 
-# Other algorithms I would like to try implementing
+# Other Algorithms
 
 
-## 5. Dual Marching Cubes
+## * Dual Marching Cubes
 
 Resources:
 * [Dual Marching Cubes](http://vis.computer.org/vis2004/dvd/vis/papers/nielson2.pdf)
 
-## 5. Manifold Dual Contouring
+## * Manifold Dual Contouring
 
 Resources:
 * [Manifold dual contouring](http://faculty.cs.tamu.edu/schaefer/research/dualsimp_tvcg.pdf)
 
-## 6. Surface Nets
+## * Surface Nets
 I don't know much of this method, other than that many of the other algorithms refer to it. Because of that I would like to research more about it and try to implement it someday.
+
+
+------------------------------
+# Supported Primitives
 
 
 -------
