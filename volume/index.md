@@ -75,7 +75,7 @@ for cell in grid do
 [![](marching_cubes_table.png)](marching_cubes_table.png)
 A image over the 3 steps in the algorithm. First find out if the corner is inside (green), or outside (red). Use the result to lookup the vertexes (blue) and its triangulation (orange).
 
-Vertex placement can be improved by instead of placing the vertex in the middle of a edge, use the fact that we every corner have a value. If we linearly interpolate this value over the edge we can find the point there the value is 0 and place the vertex there. You can find where on the edge to place the vertex by first calculating $x = \frac{v_1}{v_1 - v_2}$ and then the position with $p = p_1 + (p_2-p_1) * x$. Where $a_i$ and $p_i$ is the value and position for the first and second corner.
+Vertex placement can be improved by instead of placing the vertex in the middle of a edge, use the fact that we every corner have a value. If we linearly interpolate this value over the edge we can find the point there the value is 0 and place the vertex there. You can find where on the edge to place the vertex by first calculating $$x = \frac{v_1}{v_1 - v_2}$$ and then the position with $$p = p_1 + (p_2-p_1) * x$$. Where $$a_i$$ and $$p_i$$ is the value and position for the first and second corner.
 
 
 
