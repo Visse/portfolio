@@ -75,7 +75,12 @@ for cell in grid do
 [![](marching_cubes_table.png)](marching_cubes_table.png)
 A image over the 3 steps in the algorithm. First find out if the corner is inside (green), or outside (red). Use the result to lookup the vertexes (blue) and its triangulation (orange).
 
-Vertex placement can be improved by instead of placing the vertex in the middle of a edge, use the fact that we every corner have a value. If we linearly interpolate this value over the edge we can find the point there the value is 0 and place the vertex there. You can find where on the edge to place the vertex by first calculating $$x = \frac{v_1}{v_1 - v_2}$$ and then the position with $$p = p_1 + (p_2-p_1) * x$$. Where $$a_i$$ and $$p_i$$ is the value and position for the first and second corner.
+Vertex placement can be improved by instead of placing the vertex in the middle of a edge, use the fact that we every corner have a value. If we linearly interpolate this value over the edge we can find the point there the value is 0 and place the vertex there. You can find where on the edge to place the vertex by first calculating $$x = \frac{v_1}{v_1 - v_2}$$ and then the position with $$p = p_1 + (p_2-p_1) * x$$. Where $$a_i$$ and $$p_i$$ is the value and position for the first and second corner. As long as $$sign(v_1) != sign(v_2)$$ (that is, the edge exhibit a sign change) $$x$$ will be in the range $$[0, 1]$$ and wherefore $$p$$ lie on the edge between $$p_1$$ and $$p_2$$. By using interpolation you usually get a better surface that represents the volume function better.
+
+[![](marching_cubes_interpolate.png)](marching_cubes_interpolate.png)
+A comparison of a sphere, created without vertex interpolation (left) and with (right). Bottom row shows the corresponding wireframe.
+
+The algorithm has a couple of shortfalls. The first one is that it cannot recreate sharp corners and the second one is that the triangulation it creates are far from a good one, with lots of thin long triangles (especially when using interpolation) and that it creates a lot more triangles than are necessary, most notable on flat surfaces.
 
 
 
