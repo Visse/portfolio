@@ -37,14 +37,54 @@ First a short introduction to each algorithm.
 **Manifold Dual Contouring (MDC)** extends *DMC* to generate adoptive surface. This adoptive surface have several nice properties such as being manifold. The method proposed in the paper can also simplify surfaces close together without loosing the surface topology (connecting the surfaces together).
 
 # Implemented Algorithms
+Before I describe the algorithms, I think it would be helpful to know what data structures I use.
+First we have our sample struct, it stores (as the name suggests) samples from our volume function. Each sample has a value in the range $$[-1,1]$$, where 1 is inside the volume, and -1 is outside. The surface of this volume is at 0.
+```c
+struct Sample {
+  float value;
+  float normal[3];
+  uint16_t material;
+}
+```
+Each sample is quite small with its 20 bytes (including padding), but we can do better. By storing compressed samples, and uncompressing on the fly, we can go down to storing 8 bytes.
+```c
+struct CompressedSample {
+  uint16_t value, material;
+  uint32_t normal;
+}
+```
+Here value is compressed by storing it as fixed precision and the normal is compressed down using 10 bytes for each component.
+This may seam like a small thing but I found it quite important since the number of samples grow with the cube of the size for the volume.
+
 ## Marching Cubes
+[![](marching_cubes.png)](marching_cubes.png)
+
+Marching Cubes is a algorithm developed in 1987. This is probably one of the most famous of these algorithms and is still in use today since its both easy to implement and very fast.
+It works on data in a uniform grid, where the value of the function $$f(p)$$ is sampled at the corners of this grid. For each cell in the grid, it checks if the corners if any of the 8 corners of the cell is inside the volume. Based on what corners are inside the volume, a case is selected from a lookup table to generate a triangulation.
+
+The basic algorithm can be written as:
+```c
+for cell in grid do
+  c = 0
+  for corner in cell do
+    if corner in volume do
+      c |= (1 << corner_index)
+  triangulation = lookup_table[c];
+```
+
+[![](marching_cubes_table.png)](marching_cubes_table.png)
+A image over the 3 steps in the algorithm. First find out if the corner is inside (green), or outside (red). Use the result to lookup the vertexes (blue) and its triangulation (orange).
+
+Vertex placement can be improved by instead of placing the vertex in the middle of a edge, use the fact that we every corner have a value. If we linearly interpolate this value over the edge we can find the point there the value is 0 and place the vertex there. You can find where on the edge to place the vertex by first calculating $x = \frac{v_1}{v_1 - v_2}$ and then the position with $p = p_1 + (p_2-p_1) * x$. Where $a_i$ and $p_i$ is the value and position for the first and second corner.
 
 
-Resources:
-* [Marching Cubes: A high resolution 3D surface construction algorithm](http://fab.cba.mit.edu/classes/S62.12/docs/Lorensen_marching_cubes.pdf)
-* [Efficient implementation of marching cubes' cases with topological guarantees](http://www.academia.edu/download/3588786/10.1.1.58.4218.pdf)
+
+#### Resources:
+* [Marching Cubes: A high resolution 3D surface construction algorithm](res/Lorensen_marching_cubes.pdf)
+* [Efficient implementation of marching cubes' cases with topological guarantees](res/Efficient_implementation_of_marching_cubes_cases_with_topological_guarantees.pdf)
 
 ## Dual Contouring
+[![](dual_contouring.png)](dual_contouring.png)
 
 Resources:
 * [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
@@ -52,11 +92,13 @@ Resources:
 * [Surface simplification using quadric error metrics](https://cg.informatik.uni-freiburg.de/intern/seminar/meshSimplification_1997_Garland.pdf)
 
 ## Dual Contouring Marching Cubes
+[![](dual_contouring_marching_cubes.png)](dual_contouring_marching_cubes.png)
 
 Resources:
 * [Dual marching cubes: Primal contouring of dual grids](Dual marching cubes: Primal contouring of dual grids)
 
 ## Adoptive Dual Contouring
+[![](adoptive_dual_contouring.png)](adoptive_dual_contouring.png)
 
 
 ------------------------------
@@ -80,13 +122,28 @@ I don't know much of this method, other than that many of the other algorithms r
 
 ------------------------------
 # Supported Primitives
+Currently I support the following spheres, cubes, planes and torus. They can be combined using unions, intersection and exclusion.
 
+## Sphere
+The sphere is defined by the function $$f(x,y,z) = x^2 + y^2 + z^2 - r^2$$, there $r$ is the radius of the sphere. Its normal is the vector $$\frac{(x,y,z)}{||(x,y,z)||}$$.
 
--------
-## Terms
+## Cube
+
+## Plane
+
+## Toros
+
+------------------------------
+# Feature Work
+
+------------------------------
+# Terms
 
 **Iso Surface** An iso surface is defined by the function $$f(p) = 0$$. For example the function $$f(x,y,z) = x^2 + y^2 + z^2- r^2$$ represents a sphere with the radius $$r$$.
 
 **Uniform Grid** This is a grid there each *cell* is the same size.
 
 **Octree** This a spatial tree data structure there each cell has 8 children.
+
+
+### Other Projects can be found [here](../index.md)
