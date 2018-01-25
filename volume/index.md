@@ -97,8 +97,11 @@ This was the second algorithm that I choose to implement. It have several benefi
 \\[E(x) = \sum_i (n_i \cdot (x - p_i))^2\\]
 This function can represented in matrix notation where $$A$$ is a matrix whose rows consists of normal for the planes $$n_i$$ and $$B$$ is a vector whose entries are $$p_i \cdot n_i$$.
 \\[E(x) = (Ax-B)^T(Ax-B)\\]
-By solving for $$x$$ you get the point that lies closest to all the planes. It turns out you can store this version of $$E$$ in constant memory by utilizing that $$E(x) = x^TA^TAx -2x^TA^TB + B^TB$$ and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only needing to store 10 quantities, regardless how many planes there is. The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve
-\\[x = (A^TA)^+A^TB\]]
+It turns out you can store this version of $$E$$ in constant memory by utilizing that
+\\[E(x) = x^TA^TAx -2x^TA^TB + B^TB\\]
+and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only needing to store 10 quantities, regardless how many planes there is.
+The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve
+\\[[x = (A^TA)^+A^TB\]]
 
 Resources:
 * [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
