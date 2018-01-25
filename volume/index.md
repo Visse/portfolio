@@ -93,11 +93,11 @@ The algorithm has a couple of shortfalls. The first one is that it cannot recrea
 
 This was the second algorithm that I choose to implement. It have several benefits over *MC*, the first one is that it places vertexes inside of the cells instead of on the edges, second one is that it usually creates a better triangulation with each triangle being roughly the same size. Another benefit is that it can reproduce sharp edges. It does it by working on so called 'hermite data' - or in simpler terms - in addition to storing the value of the volume function, it stores its gradient.
 
-*DC* uses a method first introduced by a paper on surface simplification by utilizing a quadric error function (*QEF*). The *QEF* takes a set of planes defined by their normal $$n_i$$ and the vertex position $$p_i$$ and finds a point that minimizes the distance to those planes. Or in math terms: minimizes the function
+*DC* uses a method first introduced by a paper on surface simplification by utilizing a quadric error function (*QEF*). The *QEF* takes a set of planes defined by their normal $$n_i$$ and the vertex position $$p_i$$ and finds a point that minimizes the distance to those planes. Or in math terms - minimizes the function
 \\[E(x) = \sum_i (n_i \cdot (x - p_i))^2\\]
-This function can represented in matrix notation as
+This function can represented in matrix notation where $$A$$ is a matrix whose rows consists of normal for the planes $$n_i$$ and $$B$$ is a vector whose entries are $$p_i \cdot n_i$$.
 \\[E(x) = (Ax-B)^T(Ax-B)\\]
-Where $$A$$ is a matrix whose rows consists of normal for the planes $$n_i$$ and $$B$$ is a vector whose entries are $$p_i \cdot n_i$$. By solving for $$x$$ you get the point that lies closest to all the planes. It turns out you can store this version of $$E$$ in constant memory by utilizing that $$E(x) = x^TA^TAx -2x^TA^TB + B^TB$$ and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only needing to store 10 quantities, regardless how many planes there is. The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve
+By solving for $$x$$ you get the point that lies closest to all the planes. It turns out you can store this version of $$E$$ in constant memory by utilizing that $$E(x) = x^TA^TAx -2x^TA^TB + B^TB$$ and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only needing to store 10 quantities, regardless how many planes there is. The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve
 \\[x = (A^TA)^+A^TB\]]
 
 Resources:
