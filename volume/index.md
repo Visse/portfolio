@@ -91,6 +91,12 @@ The algorithm has a couple of shortfalls. The first one is that it cannot recrea
 ## Dual Contouring
 [![](dual_contouring.png)](dual_contouring.png)
 
+This was the second algorithm that I choose to implement. It have several benefits over *MC*, the first one is that it places vertexes inside of the cells instead of on the edges, second one is that it usually creates a better triangulation with each triangle being roughly the same size. Another benefit is that it can reproduce sharp edges. It does it by working on so called 'hermite data' - or in simpler terms - in addition to storing the value of the volume function, it stores its gradient.
+
+*DC* uses a method first introduced by a paper on surface simplification by utilizing a quadric error function (or *QEF* for short). The *QEF* takes a set of planes defined by their normal $$n_i$$ and the vertex position $$p_i$$ and finds a point that minimizes the distance to those planes. Or in math terms: minimizes the function $$E(x) = \sum_i (n_i \cdot (x - p_i))^2$$. That function can represented using matrix notation as $$(Ax-B)^T(Ax-B)$$ where $$A$$ is a matrix whose rows consists of the normals $$n_i$$ and $$B$$ is a vector whose entries are $$p_i \cdot n_i$$. By solving for $$x$$ you get the point that lies closest to all the planes. 
+
+Vertexes is placed by minimizing the function $$E(x) = \sum_i n_i \cdot (x - p_i)$$ where $$x$$ is the sought position, $$n_i$$ and $$p_i$$ is the normal and position for the plane.
+
 Resources:
 * [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
 * [Dual contouring: The secret sauce](http://hyperfun.org/FHF_Log/Schaefer_DualSecret_TR02408.pdf)
@@ -150,5 +156,6 @@ The sphere is defined by the function $$f(x,y,z) = x^2 + y^2 + z^2 - r^2$$, ther
 
 **Octree** This a spatial tree data structure there each cell has 8 children.
 
+**QEF**
 
 ### Other Projects can be found [here](../index.md)
