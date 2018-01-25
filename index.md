@@ -31,6 +31,13 @@ In the future I would also like to implement the following algorithms:
 
 ### [More information & images of the different algorithms](volume/index.md)
 
+-------------------------------------------
 #### 3. Meta-ball raytracer in JavaScript+WebGL
+
+
+-------------------------------------------
+#### 4. QTYoutubeViewer
+This was probably one of the first applications I tried to create. It has gone through several rewrites, each time gaining more features and becoming more user friendly.
+It is written in C++ with QT as the framework and GStreamer to decode & display the video.
 
 -------------------------------------------
