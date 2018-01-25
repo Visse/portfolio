@@ -102,7 +102,7 @@ It turns out you can store this version of $$E$$ in constant memory by utilizing
 \\[E(x) = x^TA^TAx -2x^TA^TB + B^TB\\]
 and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only needing to store 10 quantities, regardless how many planes there is.
 The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve for $$x$$ giving the equation
-\[[x = (A^TA)^+A^TB\]]
+\\[x = (A^TA)^+A^TB\\]
 
 [![](dual_contouring_qef.png)](dual_contouring_qef.png)
 The green points are inside the volume, with their gradient shown in blue. The planes are represented in purple and the point that minimizes the error function is marked by a blue dot.
