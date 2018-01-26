@@ -93,7 +93,7 @@ The algorithm has a couple of shortfalls. The first one is that it cannot recrea
 
 This was the second algorithm that I choose to implement. It have several benefits over *MC*, the first one is that it places vertexes inside of the cells instead of on the edges, second one is that it usually creates a better triangulation with each triangle being roughly the same size. Another benefit is that it can reproduce sharp edges. It does it by working on so called 'hermite data' - or in simpler terms - in addition to storing the value of the volume function, it stores its gradient.
 
-#### QEF
+#### Vertex placement with QEF
 *DC* uses a method first introduced by a paper on surface simplification by utilizing a quadric error function (*QEF*). The *QEF* takes a set of planes defined by their normal $$n_i$$ and the vertex position $$p_i$$ and finds a point that minimizes the distance to those planes. Or in math terms - minimizes the function
 \\[E(x) = \sum_i (n_i \cdot (x - p_i))^2\\]
 This function can represented in matrix notation where $$A$$ is a matrix whose rows consists of normal for the planes $$n_i$$ and $$B$$ is a vector whose entries are $$p_i \cdot n_i$$.
@@ -104,7 +104,7 @@ and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only n
 The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve for $$x$$ giving the equation
 \\[x = (A^TA)^+A^TB\\]
 
-[![](dual_contouring_qef.png)](dual_contouring_qef.png)
+[![](dual_contouring_qef.png){:height="300px"}](dual_contouring_qef.png)
 The green points are inside the volume, with their gradient shown in blue. The planes are represented in purple and the point that minimizes the error function is marked by a blue dot.
 
 Resources:
