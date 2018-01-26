@@ -104,7 +104,7 @@ and only store the matrixes $$A^TA$$, $$A^TB$$ and $$B^TB$$, resulting in only n
 The sought after point $$x$$ can then be acquired by finding the peusudo inverse of $$A^TA$$ (written as $$(A^TA)^+$$), and using it to solve for $$x$$ giving the equation
 \\[x = (A^TA)^+A^TB\\]
 
-[![](dual_contouring_qef.png){:height="300px"}](dual_contouring_qef.png)
+[![](dual_contouring_qef.png){:style="display:block;height:300px;margin:auto"}](dual_contouring_qef.png)
 The green points are inside the volume, with their gradient shown in blue. The planes are represented in purple and the point that minimizes the error function is marked by a blue dot.
 
 Resources:
