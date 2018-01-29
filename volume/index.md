@@ -107,7 +107,37 @@ The sought after point $$x$$ can then be acquired by finding the peusudo inverse
 [![](dual_contouring_qef.png){:style="display:block;height:300px;margin:auto"}](dual_contouring_qef.png)
 The green points are inside the volume, with their gradient shown in blue. The planes are represented in purple and the point that minimizes the error function is marked by a blue dot.
 
-Resources:
+#### Triangulation
+Triangulation in the *DC* algorithm was surprisingly easy. For each edge you check if it contains a sign change (from inside to outside the volume), if it did you outputted a quad with vertexes bordering the edge. To account for face culling, you could simply flip the face based on what end was inside the volume.
+It got a bit more complicated in the implementation since you had 3 distinct edge types - one along each axis. To avoid code dublication I decided to use static arrays to hold *edge-type-information* (such as what the offset was to the cells bordering it). In the end the algorithm looked like this:
+```c
+  static const uint8_t EDGE_OFFSET[3][3] = {...};
+  static const uint8_t EDGE_CELLS[3][4][3] = {...};
+
+  for (int e=0; e < 3; ++e) {
+    for (int x=0; x < size_x + EDGE_OFFSET[e][0]; ++x) {
+      for (int y=0; y < size_y + EDGE_OFFSET[e][1]; ++y) {
+        for (int z=0; z < size_z + EDGE_OFFSET[e][2]; ++z) {
+          if (edge contains a sign change) {
+            int vertexes[4];
+            for (int i=0; i < 4; ++i) {
+              vertexes[i] = findVertexInCell(x + EDGE_CELL[e][i][0],
+                                             y + EDGE_CELL[e][i][1],
+                                             z + EDGE_CELL[e][i][2]
+              );
+            }
+            pushQuad(vertexes);
+          }
+        }
+      }
+    }
+  }
+```
+
+#### Final thoughts
+I think that *DC* was quite easy to implement - the hard part was getting the *QEF* working, but I found a good implementation using SSE instruction [here](https://github.com/nickgildea/qef)
+
+#### Resources:
 * [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
 * [Dual contouring: The secret sauce](http://hyperfun.org/FHF_Log/Schaefer_DualSecret_TR02408.pdf)
 * [Surface simplification using quadric error metrics](https://cg.informatik.uni-freiburg.de/intern/seminar/meshSimplification_1997_Garland.pdf)
@@ -115,7 +145,7 @@ Resources:
 ## Dual Contouring Marching Cubes
 [![](dual_contouring_marching_cubes.png)](dual_contouring_marching_cubes.png)
 
-Resources:
+#### Resources:
 * [Dual marching cubes: Primal contouring of dual grids](Dual marching cubes: Primal contouring of dual grids)
 
 ## Adoptive Dual Contouring
