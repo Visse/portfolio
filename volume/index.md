@@ -135,12 +135,12 @@ It got a bit more complicated in the implementation since you had 3 distinct edg
 ```
 
 #### Final thoughts
-I think that *DC* was quite easy to implement - the hard part was getting the *QEF* working, but I found a good implementation using SSE instruction [here](https://github.com/nickgildea/qef)
+I think that *DC* was quite easy to implement - the hardest part was getting the *QEF* working, but I found a good implementation using SSE instruction [here](https://github.com/nickgildea/qef). It is comparable to speed to *MC* especially if you use another scheme for vertex placement - such as a uniform sample of the cell or linearly interpolate the position from the edges - and given that it supports sharp edges and gives a superior triangulation, I would say that *DC* should be preferred over *MC*.
 
 #### Resources:
-* [Dual contouring of hermite data](http://www.lsi.upc.edu/~pere/PapersWeb/SGI/DualContouring.pdf)
-* [Dual contouring: The secret sauce](http://hyperfun.org/FHF_Log/Schaefer_DualSecret_TR02408.pdf)
-* [Surface simplification using quadric error metrics](https://cg.informatik.uni-freiburg.de/intern/seminar/meshSimplification_1997_Garland.pdf)
+* [Dual contouring of hermite data](res/Dual_contouring.pdf)
+* [Dual contouring: The secret sauce](res/Dual_contouring_secret_sauce.pdf)
+* [Surface simplification using quadric error metrics](res/Surface_simplification_using_quadric_error_metrics.pdf)
 
 ## Dual Contouring Marching Cubes
 [![](dual_contouring_marching_cubes.png)](dual_contouring_marching_cubes.png)
