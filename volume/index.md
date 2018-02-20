@@ -192,6 +192,7 @@ I don't know much of this method, other than that many of the other algorithms r
 # Performance Comparison
 
 ## Cube
+
 | Algorithm                      | Setup  | Generation | Total  |
 | -------------------------------|--------|------------|--------|
 | Marching Cubes                 |    0   |     0.0032 | 0.0032 |
@@ -201,6 +202,7 @@ I don't know much of this method, other than that many of the other algorithms r
 
 
 ## Spheres
+
 | Algorithm                      | Setup  | Generation | Total  |
 | -------------------------------|--------|------------|--------|
 | Marching Cubes                 |    0   |     0.0026 | 0.0026 |
