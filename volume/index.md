@@ -15,8 +15,9 @@ Volume - **WIP**
   * [Dual Marching Cubes](#dual-marching-cubes)
   * [Manifold Dual Contouring](#manifold-dual-contouring)
   * [Surface Nets](#surface-nets)
-4. [Supported primitives](#supported-primitives)
-5. [Terms](#terms)
+4. [Performance Comparison](#performance-comparison)
+5. [Supported primitives](#supported-primitives)
+6. [Terms](#terms)
 
 
 # Introduction
@@ -37,24 +38,34 @@ First a short introduction to each algorithm.
 **Manifold Dual Contouring (MDC)** extends *DMC* to generate adoptive surface. This adoptive surface have several nice properties such as being manifold. The method proposed in the paper can also simplify surfaces close together without loosing the surface topology (connecting the surfaces together).
 
 # Implemented Algorithms
-Before I describe the algorithms, I think it would be helpful to know what data structures I use.
-First we have our sample struct, it stores (as the name suggests) samples from our volume function. Each sample has a value in the range $$[-1,1]$$, where 1 is inside the volume, and -1 is outside. The surface of this volume is at 0.
-```c
+Before I describe the algorithms, I think it would be good to know how I create and store the volume data. I generate the data from a simple interface that looks like this
+```c++
+class IVolumeSource {
+public:
+  virtual Sample getSample( vec3 point ) = 0;
+};
+```
+Different sources for the different [primitives](#supported-primitives) (spheres, cubes, etc...) is all derived from this class, and can then be combined using different [modifiers]() (union, intersection, etc..).
+The return sample is a simple struct storing value, normal, and material for the *voxel* at *point*. Value should be in the range $$[-1, 1]$$ where the surface lies at $$0$$.
+```c++
 struct Sample {
   float value;
   float normal[3];
   uint16_t material;
-}
+};
 ```
-Each sample is quite small with its 20 bytes (including padding), but we can do better. By storing compressed samples, and uncompressing on the fly, we can go down to storing 8 bytes.
+I don't store these samples directly, first I do some simple compression on them. I do compression for manly two reason, the first is that the overall memory foot print is smaller, and the second is that more samples will fit into the cache - giving a speed boost to all algorithms (in my test *MC* received a boost of 14% when compressing samples). Currently I compress by converting the value and normal to fixed precision in the range $$[-1, 1]$$ where value gets stored in 16 bits and the components of the normal gets packed down to 10 bytes each. This makes each sample take up 8 bytes instead of the original 20 bytes without giving up any noticeable precision.
 ```c
 struct CompressedSample {
   uint16_t value, material;
   uint32_t normal;
 }
 ```
-Here value is compressed by storing it as fixed precision and the normal is compressed down using 10 bytes for each component.
-This may seam like a small thing but I found it quite important since the number of samples grow with the cube of the size for the volume.
+are then stored in  
+```c
+  int index = (x * size.y + y) * size.z + z;
+```
+A unexplored possible optimisation is instead of index the array linearly, index it using a [hilbert curve](https://en.wikipedia.org/wiki/Hilbert_curve) or a [Z-order curve](https://en.wikipedia.org/wiki/Z-order_curve) to make samples spatially close also close in the array.
 
 ## Marching Cubes
 [![](marching_cubes.png)](marching_cubes.png)
@@ -144,6 +155,13 @@ I think that *DC* was quite easy to implement - the hardest part was getting the
 
 ## Dual Contouring Marching Cubes
 [![](dual_contouring_marching_cubes.png)](dual_contouring_marching_cubes.png)
+*DCMC* is named Dual Marching Cubes in the paper, but another algorithm (by Gregory M. Nielson) was released at the same time and was, in my opinion, better described by the name Dual Marching Cubes. Hence I renamed this algorithm to *DCMC* to differentiate them.
+*DCMC* is very similar to *DC* with the exception how vertex placement is decided and how the triangulation work.
+
+#### Vertex Placement
+Vertexes are placed at features for the implicit function, found by minimizing the function
+\\[E(p) = \sum_i \frac{(w - n_i \dot (p - p_i))^2}{|1 + n_i|^2}\\]
+Where $$p$$ is the sought point, $$w$$ $$n_i$$ is the normal for the plane that goes thrue the point at $$p_i$$.
 
 #### Resources:
 * [Dual marching cubes: Primal contouring of dual grids](Dual marching cubes: Primal contouring of dual grids)
@@ -170,6 +188,25 @@ Resources:
 ## Surface Nets
 I don't know much of this method, other than that many of the other algorithms refer to it. Because of that I would like to research more about it and try to implement it someday.
 
+------------------------------
+# Performance Comparison
+
+## Cube
+| Algorithm                      | Setup  | Generation | Total  |
+| -------------------------------|--------|------------|--------|
+| Marching Cubes                 |    0   |     0.0032 | 0.0032 |
+| Dual Contouring                |    0   |     0.0032 | 0.0032 |
+| Dual Contouring Marching Cubes | 0.0024 |     0.0045 | 0.0068 |
+| Adoptive Dual Contouring       | 0.0014 |     0.0005 | 0.0019 |
+
+
+## Spheres
+| Algorithm                      | Setup  | Generation | Total  |
+| -------------------------------|--------|------------|--------|
+| Marching Cubes                 |    0   |     0.0026 | 0.0026 |
+| Dual Contouring                |    0   |     0.0032 | 0.0032 |
+| Dual Contouring Marching Cubes | 0.0045 |     0.0034 | 0.0079 |
+| Adoptive Dual Contouring       | 0.0018 |     0.0009 | 0.0028 |
 
 ------------------------------
 # Supported Primitives
